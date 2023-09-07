@@ -10,16 +10,27 @@
   };
   
   outputs = { self, nixpkgs }:
-    let pkgs = nixpkgs.legacyPackages.x86_64-linux;  
+    let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      cc = pkgs.wrapCCWith rec {
+        cc = pkgs.gcc-unwrapped;
+        bintools = pkgs.wrapBintoolsWith {
+          bintools = pkgs.binutils-unwrapped;
+          libc = pkgs.glibc;
+        };
+      };      
     in {
         packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
         packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
 
         devShell.x86_64-linux =
-            pkgs.mkShell { buildInputs = [
+            (pkgs.mkShell.override {
+              stdenv = (pkgs.overrideCC pkgs.stdenv cc);
+            }){ buildInputs = [
               # LFS requirements
               pkgs.bash
+              cc
               # pkgs.binutils-unwrapped # note this should be 2.40; should be ok
               
               # Personal additions
