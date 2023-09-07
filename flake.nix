@@ -20,21 +20,34 @@
         };
       };      
     in {
-        packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-        packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
         devShell.x86_64-linux =
             (pkgs.mkShell.override {
               stdenv = (pkgs.overrideCC pkgs.stdenv cc);
             }){ buildInputs = [
               # LFS requirements
-              pkgs.bash
-              cc
-              # pkgs.binutils-unwrapped # note this should be 2.40; should be ok
-              
+              pkgs.bash              
+              # pkgs.binutils-unwrapped # should be part of stdenv above and ok at 2.40
+              pkgs.bison
+              pkgs.coreutils # TODO: do we need coreutils-full
+              pkgs.diffutils
+              pkgs.findutils
+              pkgs.gawk
+              # gcc included in stdenv; should be ok at 12.2.0
+              pkgs.gnugrep
+              pkgs.gzip
+              pkgs.gnum4
+              pkgs.gnumake
+              pkgs.gnupatch
+              pkgs.perl
+              pkgs.python312
+              pkgs.gnused
+                     pkgs.gnutar
+              pkgs.texinfo
+              pkgs.xz
+
               # Personal additions
               pkgs.ripgrep
+              pkgs.git
             ]; };
     };
 }
