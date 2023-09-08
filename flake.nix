@@ -27,13 +27,13 @@
           buildInputs = [
             # LFS requirements
             pkgs.bash              
-            # pkgs.binutils-unwrapped # should be part of stdenv above and ok at 2.40
+            # pkgs.binutils-unwrapped # should be part of stdenv above
             pkgs.bison
             pkgs.coreutils # TODO: do we need coreutils-full
             pkgs.diffutils
             pkgs.findutils
             pkgs.gawk
-            # gcc included in stdenv; should be ok at 12.2.0
+            # gcc included in stdenv
             pkgs.gnugrep
             pkgs.gzip
             pkgs.gnum4
@@ -42,9 +42,12 @@
             pkgs.perl
             pkgs.python312
             pkgs.gnused
-                   pkgs.gnutar
+            pkgs.gnutar
             pkgs.texinfo
             pkgs.xz
+
+            # Implicitly assumed by LFS
+            pkgs.mount
 
             # Personal additions
             pkgs.ripgrep
