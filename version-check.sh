@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # A script to list version numbers of critical development tools
 
 # If you have tools installed in other directories, adjust PATH here AND
 # in ~lfs/.bashrc (section 4.4) as well.
 
 LC_ALL=C 
-PATH=/usr/bin:/bin
+# PATH=/usr/bin:/bin
+# We comment out PATH as we will use the PATH from a nix shell environment
 
 bail() { echo "FATAL: $1"; exit 1; }
 grep --version > /dev/null 2> /dev/null || bail "grep does not work"
