@@ -1,5 +1,8 @@
 #
-# Run with `nix develop -i`; note the `-i` gives a more pure environment
+# Run with `nix develop -i --impure`;
+# note the `-i` gives a more pure environment, but we currently need
+# `--impure` to allow a config.nix to be read, permitting the use of
+# xen (which as the time of this writing, has some known CVEs)
 #
 
 {
@@ -49,7 +52,10 @@
             # Implicitly assumed by LFS
             pkgs.mount
 
-            # Personal additions
+            # VM and disk image utils
+            pkgs.qemu_xen
+
+            # Personal additions to ease development
             pkgs.ripgrep
             pkgs.git
           ];
