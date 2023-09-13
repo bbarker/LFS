@@ -55,13 +55,20 @@
             # VM and disk image utils
             pkgs.qemu_xen
 
+            # Used for scripting and automating the process
+            pkgs.tinycc
+            # pkgs.vlang
+
             # Personal additions to ease development
-            pkgs.ripgrep
             pkgs.git
+            pkgs.less
+            pkgs.ripgrep
           ];
 
           shellHook = ''
+            export HOME=`pwd`
             source ./version-check.sh
+            export PATH=$PATH:$HOME/v
           '';
         };
     };
